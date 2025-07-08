@@ -40,3 +40,51 @@
 On Other device:
 
     pip install -r requirements.txt (create venv first)
+
+## How to create a table for model?
+
+        python manage.py makemigrations members (or whatever you named your child folder)
+
+If it doesn't work look at settings.py to see if you added it to the installed apps
+
+If it worked there should be a new file in your migrations folder.
+
+Then run: 
+
+        python manage.py migrate
+
+## How to edit the data?
+
+        python manage.py shell (run this first to activate the shell)
+        >>> from members.models import Member (or whatever you named it)
+        >>> Member.objects.all()
+
+Returns: 
+
+        <QuerySet []>
+
+To add a record:
+
+        >>> member = Member(firstname='Emil', lastname='Refsnes')
+        >>> member.save()
+
+To add multiple records at once:
+
+        >>> member1 = Member(firstname='Tobias', lastname='Refsnes')
+        >>> member2 = Member(firstname='Linus', lastname='Refsnes')
+        >>> member3 = Member(firstname='Lene', lastname='Refsnes')
+        >>> member4 = Member(firstname='Stale', lastname='Refsnes')
+        >>> member5 = Member(firstname='Jane', lastname='Doe')
+        >>> members_list = [member1, member2, member3, member4, member5]
+        >>> for x in members_list:
+        ...   x.save()
+        ...
+        >>>
+
+To see table values:
+
+        >>> Member.objects.all().values()
+
+Other functions for the data: [text](https://www.w3schools.com/django/django_update_data.php)
+
+To close py shell: run exit() or quit()

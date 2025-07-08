@@ -26,6 +26,6 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('', include('questions.urls')),        """ name of the other folder where the url.py is """
+    path('', include('questions.urls')),        #name of the other folder where the url.py is
     path('admin/', admin.site.urls),
 ]
