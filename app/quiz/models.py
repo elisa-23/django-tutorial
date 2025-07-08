@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
+import uuid
 
 class Role(models.Model):
     USER = 1
@@ -41,16 +42,20 @@ class Type(models.Model):
         return self.get_id_display()
 
 class Quizzes(models.Model):
+    uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255, null=False)
     types = models.ManyToManyField(Type, null=False)
     creator = models.ForeignKey(Users, null=False)
 
     def __str__(self):
-        return self.title
+        return self.uuid_id
 
 class Questions(models.Model):
+    uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     question = models.CharField(max_length=255, null=False)
     answer = ArrayField(models.CharField(max_length=200), blank=False, default=list, null=False)
     incorrect = ArrayField(models.CharField(max_length=200), blank=True, default=list)
     quiz = models.ForeignKey(Quizzes, null=False)
 
+    def __str__(self):
+        return self.uuid_id
