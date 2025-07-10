@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
 ]
 
-AUTH_USER_MODEL ='quiz.urls'
+AUTH_USER_MODEL ='quiz.Users'
 REST_FRAMEWORK = {
   'DEFAULT_PERMISSION_CLASSES': (
       'rest_framework.permissions.IsAuthenticated',

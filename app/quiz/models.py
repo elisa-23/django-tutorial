@@ -15,7 +15,7 @@ class Role(models.Model):
 
 # Create your models here.
 class Users(AbstractUser):
-    role = models.ForeignKey(Role, null=False)
+    role = models.ForeignKey(Role, null=False, on_delete=models.CASCADE)
 
     username = models.CharField(max_length=255, null=False, unique=True)
     email = models.EmailField(null=False, unique=True)            #parenthesis can't be empty
@@ -44,8 +44,8 @@ class Type(models.Model):
 class Quizzes(models.Model):
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255, null=False)
-    types = models.ManyToManyField(Type, null=False)
-    creator = models.ForeignKey(Users, null=False)
+    types = models.ManyToManyField(Type)
+    creator = models.ForeignKey(Users, null=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.uuid_id
@@ -55,7 +55,7 @@ class Questions(models.Model):
     question = models.CharField(max_length=255, null=False)
     answer = ArrayField(models.CharField(max_length=200), blank=False, default=list, null=False)
     incorrect = ArrayField(models.CharField(max_length=200), blank=True, default=list)
-    quiz = models.ForeignKey(Quizzes, null=False)
+    quiz = models.ForeignKey(Quizzes, null=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.uuid_id
