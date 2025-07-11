@@ -16,10 +16,10 @@ Including another URLconf
 """
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from myapp.views import BlogPostViewSet
+from quiz.views import UsersViewSet
 
 router = DefaultRouter()
-router.register(r'users', BlogPostViewSet)
+router.register(r'users', UsersViewSet)
 
 urlpatterns = [
 	path('', include(router.urls)),
