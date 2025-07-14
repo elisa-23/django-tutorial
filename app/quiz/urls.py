@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import UsersView
+from .views import UsersViewSet
 
 urlpatterns = [
-    path('register/', UsersView.as_view(), name='users'),
+    path('register/', UsersViewSet.as_view({'get': 'list'}), name='users'),
 ]
