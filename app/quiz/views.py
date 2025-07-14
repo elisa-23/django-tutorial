@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Users, Questions, Quizzes, Type, Role
-from .serializers import UsersSerializer, QuizzesSerializer, QuestionsSerializer, TypeSerializer, RoleSerializer
+from .models import Users, Questions, Quizzes, Type
+from .serializers import UsersSerializer, QuizzesSerializer, QuestionsSerializer, TypeSerializer
 
 class UsersViewSet(viewsets.ModelViewSet):
 	queryset = Users.objects.all()
@@ -17,7 +17,3 @@ class QuestionsViewSet(viewsets.ModelViewSet):
 class TypeViewSet(viewsets.ModelViewSet):
 	queryset = Type.objects.all()
 	serializer_class = TypeSerializer
-
-class RoleViewSet(viewsets.ModelViewSet):
-	queryset = Role.objects.all()
-	serializer_class = RoleSerializer

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Users, Questions, Quizzes, Type, Role
+from .models import Users, Questions, Quizzes, Type
 
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,9 +20,3 @@ class TypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Type
         fields = ['id', 'get_id_display']
-
-class RoleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Role
-        fields = ['id', 'get_id_display']
-        read_only_fields = ['id']

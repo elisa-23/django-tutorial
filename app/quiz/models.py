@@ -2,19 +2,12 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 import uuid
 
-class Role(models.Model):
+# Create your models here.
+class Users(AbstractUser):
     USER = 1
     ADMIN = 2
     ROLE_CHOICES = ((USER, 'user'), (ADMIN, 'admin'))
-
-    id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True)
-
-    def __str__(self):
-        return self.get_id_display()
-
-# Create your models here.
-class Users(AbstractUser):
-    role = models.ForeignKey(Role, null=False, on_delete=models.CASCADE)
+    role = models.CharField(choices=ROLE_CHOICES, null=False, default=(USER, 'user'))
 
     username = models.CharField(max_length=255, null=False, unique=True)
     email = models.EmailField(null=False, unique=True)            #parenthesis can't be empty
