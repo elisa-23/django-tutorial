@@ -25,5 +25,6 @@ router.register(r"users", UsersViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', UsersViewSet.as_view({'get': 'list'}), name='users'),
+    
     path('', include(router.urls))
 ]
