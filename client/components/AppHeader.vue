@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white top-1 z-998 sticky rounded-md left-0 flex flex-wrap justify-items-center h-screen w-[15%] p-5 shadow-md">
+    <div class="bg-white top-1 z-998  rounded-md left-0 flex flex-wrap justify-items-center h-screen w-fit p-5 shadow-md">
         <div class="w-[100%] h-[10%] text-center">
             <h3 v-if="signin" class="text-lg font-semibold">Welcome, {{username}}!</h3>
             <!-- create sign in button to redirect to signin page -->

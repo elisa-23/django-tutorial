@@ -1,6 +1,6 @@
 <template>
-    <div class="left-[15%]">
-        dhfd
+    <div class="left-[15%] signin">
+        hads
     </div>
 </template>
 
