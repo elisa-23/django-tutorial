@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from quiz.views import UsersViewSet, QuizzesViewSet, QuestionsViewSet
+from rest_framework_simplejwt import views as jwt_views
 
 router = DefaultRouter()
 router.register(r"users", UsersViewSet)
@@ -28,5 +29,11 @@ urlpatterns = [
     path('user/', UsersViewSet.as_view({'get': 'list'}), name='users'),
     path('quiz/', QuizzesViewSet.as_view({'get': 'list'}), name='quizzes'),
     path('question/', QuestionsViewSet.as_view({'get': 'list'}), name='questions'),
+    path('users/token/',
+         jwt_views.TokenObtainPairView.as_view(),
+         name ='token_obtain_pair'),
+    path('users/token/refresh/',
+         jwt_views.TokenRefreshView.as_view(),
+         name ='token_refresh'),
     path('', include(router.urls))
 ]
