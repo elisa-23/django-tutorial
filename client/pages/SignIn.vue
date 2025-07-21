@@ -12,7 +12,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 const email = ref('');
 const password = ref('');
@@ -24,8 +24,21 @@ onBeforeMount(() => {
     password.value = '';
 })
 
+const userInfo = reactive<User>({
+    email: email.value,
+    id: 0,
+    role: "",
+    username: "",
+    accessToken: "",
+    refreshToken: "",
+});
+
 async function signin() {
-    const token = await $fetch((config.public.apiBase + "/api/token/"), { 
+    let token = {
+        access: "",
+        refresh: "",
+    }
+    token = await $fetch((config.public.apiBaseUrl + "/api/token/"), { 
         method: 'POST',
         body: {
             email: email.value, // or username //make sure the field name is the same as dj
@@ -33,6 +46,15 @@ async function signin() {
         },
     });
     console.log(token);
+    userInfo.accessToken = token.access;
+    userInfo.refreshToken = token.refresh;
+    const user = await $fetch((config.public.apiBaseUrl + "/users/"), {
+        query: {
+            email: email.value,
+            password: password.value,
+        }
+    })
+    console.log(user);
 }
 </script>
 

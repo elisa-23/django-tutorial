@@ -35,8 +35,8 @@ urlpatterns = [     #order matters
     path('api/token/refresh/',
          jwt_views.TokenRefreshView.as_view(),
          name ='token_refresh'),
-    path('api/token/access/',
-         jwt_views.T.as_view(),
+    path('api/token/verify/',
+         jwt_views.TokenVerifyView.as_view(),
          name ='token_verify'),
     path('', include(router.urls))
 ]
