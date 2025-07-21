@@ -17,13 +17,22 @@
 const email = ref('');
 const password = ref('');
 
+const config = useRuntimeConfig();       // base url access = config.public.apiBase
+
 onBeforeMount(() => {
     email.value = '';
     password.value = '';
 })
 
-function signin() {
-    const config = useRuntimeConfig();       // base url access = config.public.apiBase
+async function signin() {
+    const token = await $fetch((config.public.apiBase + "/api/token/"), { 
+        method: 'POST',
+        body: {
+            email: email.value, // or username //make sure the field name is the same as dj
+            password: password.value,
+        },
+    });
+    console.log(token);
 }
 </script>
 

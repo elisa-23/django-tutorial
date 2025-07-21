@@ -24,16 +24,19 @@ router = DefaultRouter()
 router.register(r"users", UsersViewSet)
 router.register(r"quizzes", QuizzesViewSet)
 
-urlpatterns = [
+urlpatterns = [     #order matters
     path('admin/', admin.site.urls),
     path('user/', UsersViewSet.as_view({'get': 'list'}), name='users'),
     path('quiz/', QuizzesViewSet.as_view({'get': 'list'}), name='quizzes'),
     path('question/', QuestionsViewSet.as_view({'get': 'list'}), name='questions'),
-    path('users/token/',
+    path('api/token/',
          jwt_views.TokenObtainPairView.as_view(),
          name ='token_obtain_pair'),
-    path('users/token/refresh/',
+    path('api/token/refresh/',
          jwt_views.TokenRefreshView.as_view(),
          name ='token_refresh'),
+    path('api/token/access/',
+         jwt_views.T.as_view(),
+         name ='token_verify'),
     path('', include(router.urls))
 ]
