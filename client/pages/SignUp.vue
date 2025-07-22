@@ -21,7 +21,7 @@
             <button type="submit">Sign Up</button>
         </form>
         <br>
-        <NuxtLink to="/SignIn">
+        <NuxtLink to="/signin">
             <p class="italic underline hover:text-sky-600">Have an account? Click here to sign in.</p>
         </NuxtLink>
     </div>
@@ -35,6 +35,5 @@ const check = ref("");
 const role = ref("");
 
 function signup() {
-    console.log(role.value);
 }
 </script>

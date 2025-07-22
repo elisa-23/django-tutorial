@@ -8,7 +8,7 @@
             <button type="submit">Sign In</button>
         </form>
         <br>
-        <NuxtLink to="/SignUp">
+        <NuxtLink to="/signup">
             <p class="italic underline hover:text-sky-600">Don't have an account? Click here to sign up.</p>
         </NuxtLink>
     </div>
@@ -19,7 +19,8 @@
 const email = ref('');
 const password = ref('');
 
-const config = useRuntimeConfig();       // base url access = config.public.apiBase
+//const config = useRuntimeConfig();       // base url access = config.public.apiBase
+//Just put inside of utils!!        //will use in multi files
 
 onBeforeMount(() => {
     email.value = '';
