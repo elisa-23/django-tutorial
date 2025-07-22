@@ -17,8 +17,14 @@
             </select>
             <br>
             <input name="email" placeholder="Enter an email" type="email" required v-model="email"></input>
+            <p v-if="emailExists" class="password-error italic underline text-red-600 bg-red-300 text-xs">
+                Please try again. This email has already been used before.
+            </p>
             <br>
             <input name="username" placeholder="Enter a username" type="text" required v-model="username"></input>
+            <p v-if="usernameExists" class="password-error italic underline text-red-600 bg-red-300 text-xs">
+                Please try again. This username has already been taken.
+            </p>
             <br>
             <input name="password" placeholder="Enter a password" type="password" required v-model="password"></input>
             <br>
@@ -43,7 +49,33 @@ const password = ref("");
 const check = ref("");
 const role = ref("");
 
-function signup() {
-    
+const userInfo = reactive<User>({
+    email: "",
+    id: 0,
+    role: "",
+    username: "",
+    accessToken: "",
+    refreshToken: "",
+});
+
+const emailExists = ref(false);
+const usernameExists = ref(false);
+
+async function signup() {
+    if (check.value !== password.value) {
+        alert("Passwords do not match. Please try again.");
+        return;
+    }
+
+    const existing = (await $fetch((config.public.apiBaseUrl + "/api/user/exists/")) || []) as any[];
+
+    for (const user of existing) {
+        if (existing[user].email === email.value) {
+            return emailExists.value = true;
+        }
+        if (existing[user].username === username.value) {
+            return usernameExists.value = true;
+        }
+    }
 }
 </script>
