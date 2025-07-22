@@ -2,12 +2,21 @@
     <div class="left-[15%] signup">
         <h3>SIGN UP</h3>
         <form @submit.prevent="signup">
+            <p>Choose a role:</p>
             <select name="roles" v-model="role" required placeholder="Choose a role">
-                <option value="(1, user)">user</option>
-                <option value="(2, supervisor)">supervisor</option>
+                <option 
+                    value="(1, user)" 
+                    title="USER: This role is the basic role with minimal previleges. *NOTE: This role CANNOT create quizzes.">
+                    user
+                </option>
+                <option 
+                    value="(2, supervisor)" 
+                    title="SUPERVISOR: This role is an advanced role with similar features as the USER. *NOTE: This role CAN create quizzes">
+                    supervisor
+                </option>
             </select>
             <br>
-            <input name="email" placeholder="Enter a email" type="email" required v-model="email"></input>
+            <input name="email" placeholder="Enter an email" type="email" required v-model="email"></input>
             <br>
             <input name="username" placeholder="Enter a username" type="text" required v-model="username"></input>
             <br>
