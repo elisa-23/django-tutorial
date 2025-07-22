@@ -44,5 +44,6 @@ const check = ref("");
 const role = ref("");
 
 function signup() {
+    
 }
 </script>
