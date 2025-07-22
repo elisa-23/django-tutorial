@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'quiz',
     'corsheaders',
-    'rest_auth'
+    'rest_auth',
+    'django_filters'
 
 ]
 
