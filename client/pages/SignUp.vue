@@ -67,15 +67,23 @@ async function signup() {
         return;
     }
 
-    const existing = (await $fetch((config.public.apiBaseUrl + "/api/user/exists/")) || []) as any[];
-
+    const existing = await fetchEndpoint<any[]>('/users/') || [];
+    console.log(email.value, username.value, existing);
     for (const user of existing) {
-        if (existing[user].email === email.value) {
+        console.log(user);
+        if (user.email === email.value) {
             return emailExists.value = true;
         }
-        if (existing[user].username === username.value) {
+        if (user.username === username.value) {
             return usernameExists.value = true;
         }
     }
+
+    const createdUser = await fetchEndpoint<User>('/users/', 'POST', {
+        email: email.value,
+        username: username.value,
+        password: password.value,
+        role: role.value.split(',')[1].trim(), // Extract the role from the value
+    });
 }
 </script>

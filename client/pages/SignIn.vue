@@ -36,18 +36,22 @@ const userInfo = reactive<User>({
     refreshToken: "",
 });
 
+/**
+ * Signs in a user using the provided email and password.
+ * If the email and password are valid, the user info is stored in the userInfo reactive object.
+ * The user info contains the user's id, username, email, role, access token, and refresh token.
+ * If the email and password are not valid, an alert will pop up with the message "Invalid email or password. Please try again.".
+ */
 async function signin() {
-    let token = {
-        access: "",
-        refresh: "",
+    const token = await fetchEndpoint<{ access: string, refresh: string }>("/api/token/", 'POST', {
+        email: email.value, // or username //make sure the field name is the same as dj
+        password: password.value,
+    });          
+    if (!token || !token.access || !token.refresh) {
+        alert("Invalid email or password. Please try again.");
+        return;
     }
-    token = await $fetch((config.public.apiBaseUrl + "/api/token/"), { 
-        method: 'POST',
-        body: {
-            email: email.value, // or username //make sure the field name is the same as dj
-            password: password.value,
-        },
-    });
+
     userInfo.accessToken = token.access;
     userInfo.refreshToken = token.refresh;
 
@@ -62,20 +66,10 @@ async function signin() {
         role: string
         username: string
     }
+    const user = await fetchEndpoint<BasicInfo[]>('/users/', 'GET', undefined, {
+        id: decodedPayLoad.user_id,
+    });
 
-    let user: BasicInfo[] = ([
-        {
-            email: "",
-            role: "",
-            username: ""
-        }
-    ])
-    user = (await $fetch((config.public.apiBaseUrl + "/users/"), {
-        params: {
-            id: decodedPayLoad.user_id,
-        }
-    }))
-    console.log(user);
     userInfo.id = decodedPayLoad.user_id;
     if (user.length > 0) {
         userInfo.role = user[0]?.role || "";
@@ -84,7 +78,6 @@ async function signin() {
     } else {
         alert(`User NOT found. There is no user with this ID: ${decodedPayLoad.user_id}`)
     }
-    console.log(userInfo);
     email.value = "";
     password.value = "";
 }
