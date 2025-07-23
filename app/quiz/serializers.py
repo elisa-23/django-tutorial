@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Users, Questions, Quizzes
+from .models import CustomUser, Question, Quiz
 MULTIPLE_CHOICE = 1
 BOOLEAN = 2
 DROPDOWN = 3
@@ -11,19 +11,19 @@ TYPE_CHOICES = (
     (DROPDOWN, 'dropdown'),
     (NUMERICAL, 'numerical')
 )
-class UsersSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Users
+        model = CustomUser
         fields = ['id', 'role', 'username', 'email', 'password']
 
-class QuestionsSerializer(serializers.ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Questions
+        model = Question
         fields = ['id', 'question', 'answer', 'incorect', 'quiz']
 
-class QuizzesSerializer(serializers.ModelSerializer):
+class QuizSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Quizzes
+        model = Quiz
         fields = ['id', 'title', 'types', 'creator']
     
     def validate_types(self, value):

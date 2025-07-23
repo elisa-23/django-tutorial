@@ -1,19 +1,19 @@
 import django_filters
 from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Users, Questions, Quizzes
-from .serializers import UsersSerializer, QuizzesSerializer, QuestionsSerializer
+from .models import CustomUser, Question, Quiz
+from .serializers import UserSerializer, QuizSerializer, QuestionSerializer
 
-class UsersViewSet(viewsets.ModelViewSet):
-	queryset = Users.objects.all()
-	serializer_class = UsersSerializer
+class UserViewSet(viewsets.ModelViewSet):
+	queryset = CustomUser.objects.all()
+	serializer_class = UserSerializer
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['id']
 
 class QuizzesViewSet(viewsets.ModelViewSet):
-	queryset = Quizzes.objects.all()
-	serializer_class = QuizzesSerializer
+	queryset = Quiz.objects.all()
+	serializer_class = QuizSerializer
 
 class QuestionsViewSet(viewsets.ModelViewSet):
-	queryset = Questions.objects.all()
-	serializer_class = QuestionsSerializer
+	queryset = Question.objects.all()
+	serializer_class = QuestionSerializer

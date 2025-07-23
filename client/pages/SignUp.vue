@@ -5,12 +5,12 @@
             <p>Choose a role:</p>
             <select name="roles" v-model="role" required placeholder="Choose a role">
                 <option 
-                    value="(1, user)" 
+                    :value="(1, 'user')" 
                     title="USER: This role is the basic role with minimal previleges. *NOTE: This role CANNOT create quizzes.">
                     user
                 </option>
                 <option 
-                    value="(2, supervisor)" 
+                    :value="(2, 'supervisor')" 
                     title="SUPERVISOR: This role is an advanced role with similar features as the USER. *NOTE: This role CAN create quizzes">
                     supervisor
                 </option>
@@ -20,12 +20,12 @@
             <p v-if="emailExists" class="password-error italic underline text-red-600 bg-red-300 text-xs">
                 Please try again. This email has already been used before.
             </p>
-            <br>
+            <br v-if="!emailExists">
             <input name="username" placeholder="Enter a username" type="text" required v-model="username"></input>
             <p v-if="usernameExists" class="password-error italic underline text-red-600 bg-red-300 text-xs">
                 Please try again. This username has already been taken.
             </p>
-            <br>
+            <br v-if="!usernameExists">
             <input name="password" placeholder="Enter a password" type="password" required v-model="password"></input>
             <br>
             <input name="password" placeholder="Reenter your password" type="password" required v-model="check"></input>
@@ -52,7 +52,8 @@ const role = ref("");
 const userInfo = reactive<User>({
     email: "",
     id: 0,
-    role: "",
+    role: (1, 'user'), // Default role set to 'user'
+    // You can change this to 'supervisor' if needed
     username: "",
     accessToken: "",
     refreshToken: "",
@@ -83,7 +84,9 @@ async function signup() {
         email: email.value,
         username: username.value,
         password: password.value,
-        role: role.value.split(',')[1].trim(), // Extract the role from the value
+        role: role.value,
     });
+
+    console.log(createdUser);
 }
 </script>

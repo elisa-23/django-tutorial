@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Users
-from .models import Quizzes
-from .models import Questions
+from .models import CustomUser
+from .models import Quiz
+from .models import Question
 
-admin.site.register(Users)
-admin.site.register(Quizzes)
-admin.site.register(Questions)
+admin.site.register(CustomUser)
+admin.site.register(Quiz)
+admin.site.register(Question)

@@ -1,19 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import User
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError("The Email field must be set")
         email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        user = CustomUser(email=email, **extra_fields)
         user.set_password(password)  # Ensures the password is hashed
         user.save(using=self._db)
         return user
 
 # Create your models here.
-class Users(AbstractUser):
+class CustomUser(AbstractUser):
 
     USER = 1
     SUPERVISOR = 2
@@ -29,23 +30,22 @@ class Users(AbstractUser):
 
     objects = CustomUserManager()
 
-
     def __str__(self):
     	return "{}".format(self.email)
 
-class Quizzes(models.Model):
+class Quiz(models.Model):
     types = models.JSONField()
     title = models.CharField(max_length=255, null=False)
-    creator = models.ForeignKey(Users, null=False, on_delete=models.CASCADE)
+    creator = models.ForeignKey(CustomUser, null=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)
 
-class Questions(models.Model):
+class Question(models.Model):
     question = models.CharField(max_length=255, null=False)
     answer = models.JSONField(default=list)
     incorrect = models.JSONField(default=list, blank=True, null=True)
-    quiz = models.ForeignKey(Quizzes, null=False, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, null=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)
