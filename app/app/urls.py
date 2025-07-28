@@ -26,9 +26,9 @@ router.register(r"quizzes", QuizViewSet)
 
 urlpatterns = [     #order matters
     path('admin/', admin.site.urls),
-    path('user/', UserViewSet.as_view({'get': 'list'}), name='users'),
-    path('quiz/', QuizViewSet.as_view({'get': 'list'}), name='quizzes'),
-    path('question/', QuestionViewSet.as_view({'get': 'list'}), name='questions'),
+    path('user/', UserViewSet.as_view({'get': 'list'}), name='user'),
+    path('quiz/', QuizViewSet.as_view({'get': 'list'}), name='quiz'),
+    path('question/', QuestionViewSet.as_view({'get': 'list'}), name='question'),
     path('api/token/',
          jwt_views.TokenObtainPairView.as_view(),
          name ='token_obtain_pair'),
