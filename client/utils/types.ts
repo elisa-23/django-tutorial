@@ -18,6 +18,10 @@ export interface Question {
     answer: string|string[]
     incorrect: string[] | string[][]
     quiz: number
+    parts?:Array<
+    | { type: "questionPart"; text: string }
+    | { type: "blank"; answer: string; incorrect: string[] }
+  >;
 }
 
 export interface Quiz {

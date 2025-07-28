@@ -7,7 +7,7 @@
         Welcome, {{ username }}!
       </h3>
       <!-- create sign in button to redirect to signin page -->
-      <NuxtLink to="/SignIn">
+      <NuxtLink to="/signin">
         <button
           v-if="!signin"
           class="bg-white rounded-md w-[100%] h-[50%] text-center hover:bg-[#E6E6FA] active:bg-[#CCCCFF] m-auto"

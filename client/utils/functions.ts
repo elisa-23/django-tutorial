@@ -81,7 +81,7 @@ export async function fetchEndpoint<T>(     //<T> a parameter
     }
 
     try {
-        return await $fetch(`${config.public.apiBaseUrl}${url}`, options) as T;
+        return await $fetch(`${config.public.apiBase}${url}`, options) as T;
     } catch (error: any) {
         console.error(`Error fetching ${url}:`, error?.data || error?.message || error);
         throw error;

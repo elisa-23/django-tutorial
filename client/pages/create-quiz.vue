@@ -46,6 +46,9 @@ function addBlankQuestion(id: number, type: string) {
       answer: [""],
       incorrect: [[""]],
       quiz: 1, // figure out quiz id later
+      parts: [
+        { type: "questionPart", text: "" }, // optional: start with a question part
+      ],
     });
   } else {
     forms.value.push({

@@ -48,49 +48,55 @@
     </div>
 
     <div v-if="type === 'dd'">
-      <div
-        v-for="(blankQuestion, index) in modelValue.question"
-        :key="'questionpart' + index"
-        class="mt-4"
-      >
-        <input
-          type="text"
-          placeholder="Question part"
-          v-model="modelValue.question[index]"
-        />
-      </div>
-      <div
-        v-for="(blankAnswer, index) in modelValue.answer"
-        :key="'blank' + index"
-        class="mt-4"
-      >
-        <input
-          type="text"
-          placeholder="Blank - correct answer"
-          v-model="modelValue.answer[index]"
-        />
-        <div class="mt-2 space-y-2">
-          <input
-            v-for="(wrong, i) in modelValue.incorrect[index]"
-            :key="'wrong' + index + '-' + i"
-            type="text"
-            placeholder="Incorrect Answer"
-            v-model="modelValue.incorrect[index][i]"
-          />
+      <input
+        type="text"
+        placeholder="Dropdown Title"
+        v-model="modelValue.question"
+        class="mb-4"
+      />
 
-          <button
-            v-if="modelValue.incorrect[index].length < 4"
-            @click.prevent="addDropdownIncorrect(index)"
-          >
-            Add Incorrect Answer
-          </button>
+      <div
+        v-for="(part, index) in modelValue.parts"
+        :key="'part-' + index"
+        class="mb-4"
+      >
+        <div v-if="part.type === 'questionPart'">
+          <input
+            type="text"
+            placeholder="Question text"
+            v-model="part.text"
+            class="w-full"
+          />
+        </div>
+
+        <div v-else-if="part.type === 'blank'">
+          <input
+            type="text"
+            placeholder="Correct Answer"
+            v-model="part.answer"
+          />
+          <div class="mt-2 space-y-2">
+            <input
+              v-for="(wrong, i) in part.incorrect"
+              :key="'wrong-' + index + '-' + i"
+              type="text"
+              placeholder="Incorrect Answer"
+              v-model="part.incorrect[i]"
+            />
+            <button
+              v-if="part.incorrect.length < 4"
+              @click.prevent="addIncorrectOption(index)"
+            >
+              Add Incorrect Answer
+            </button>
+          </div>
         </div>
       </div>
 
-      <button @click.prevent="addDropdownBlank">Add a Blank</button>
-      <button @click.prevent="addDropdownQuestionPart">
-        Add a Question Part
-      </button>
+      <div class="mt-4 space-x-2">
+        <button @click.prevent="addQuestionPart">Add Question Text</button>
+        <button @click.prevent="addBlankPart">Add Blank</button>
+      </div>
     </div>
 
     <button class="" @click="removeQuestion">Remove</button>
@@ -121,40 +127,33 @@ function removeQuestion() {
   }>
 >([{ type: "q", value: "" }]); */
 
-function addDropdownBlank() {
-  //ddArray.push({ type: "b" }, { type: "q", value: "" });
-
-  if (
-    Array.isArray(modelValue.value.answer) &&
-    Array.isArray(modelValue.value.question)
-  ) {
-    modelValue.value.answer.push("");
-    modelValue.value.question.push("");
-  } else {
-    modelValue.value.answer = [""];
-    modelValue.value.question = [""];
-  }
-  if (Array.isArray(modelValue.value.incorrect)) {
-    modelValue.value.incorrect.push([""]);
-  } else {
-    modelValue.value.incorrect = [[""]];
+function addQuestionPart() {
+  if (modelValue.value.parts) {
+    modelValue.value.parts.push({
+      type: "questionPart",
+      text: "",
+    });
   }
 }
 
-function addDropdownQuestionPart() {
-  if (Array.isArray(modelValue.value.question)) {
-    modelValue.value.question.push("");
-  } else {
-    modelValue.value.question = [""];
+function addBlankPart() {
+  if (modelValue.value.parts) {
+    modelValue.value.parts.push({
+      type: "blank",
+      answer: "",
+      incorrect: [""],
+    });
   }
 }
 
-function addDropdownIncorrect(index: number) {
-  if (
-    Array.isArray(modelValue.value.incorrect[index]) &&
-    modelValue.value.incorrect[index].length < 4
-  ) {
-    modelValue.value.incorrect[index].push("");
+function addIncorrectOption(index: number) {
+  if (modelValue.value.parts) {
+    const part = modelValue.value.parts[index];
+    if (part) {
+      if (part.type === "blank" && part.incorrect.length < 4) {
+        part.incorrect.push("");
+      }
+    }
   }
 }
 </script>
