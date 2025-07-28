@@ -1,8 +1,27 @@
 export interface User {
-    email: string
     id: number
+    email: string
     role: string | number
     username: string
     accessToken: string
     refreshToken: string
+}
+
+export interface UserForm {
+    username: string
+    email: string
+    password: string
+}
+
+export interface Question {
+    question: string
+    answer: string|string[]
+    incorrect: string[] | string[][]
+    quiz: number
+}
+
+export interface Quiz {
+    id: number
+    title: string
+    creator: string
 }
