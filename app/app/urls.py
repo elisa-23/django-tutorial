@@ -17,18 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from quiz.views import UsersViewSet, QuizzesViewSet, QuestionsViewSet
+from quiz.views import UserViewSet, QuizViewSet, QuestionViewSet
 from rest_framework_simplejwt import views as jwt_views
 
 router = DefaultRouter()
-router.register(r"users", UsersViewSet)
-router.register(r"quizzes", QuizzesViewSet)
+router.register(r"users", UserViewSet)
+router.register(r"quizzes", QuizViewSet)
 
 urlpatterns = [     #order matters
     path('admin/', admin.site.urls),
-    path('user/', UsersViewSet.as_view({'get': 'list'}), name='users'),
-    path('quiz/', QuizzesViewSet.as_view({'get': 'list'}), name='quizzes'),
-    path('question/', QuestionsViewSet.as_view({'get': 'list'}), name='questions'),
+    path('user/', UserViewSet.as_view({'get': 'list'}), name='users'),
+    path('quiz/', QuizViewSet.as_view({'get': 'list'}), name='quizzes'),
+    path('question/', QuestionViewSet.as_view({'get': 'list'}), name='questions'),
     path('api/token/',
          jwt_views.TokenObtainPairView.as_view(),
          name ='token_obtain_pair'),

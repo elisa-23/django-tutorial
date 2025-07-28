@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 
 ]
 
-AUTH_USER_MODEL ='quiz.Users'
+AUTH_USER_MODEL ='quiz.CustomUser'
 REST_FRAMEWORK = {
   'DEFAULT_AUTHENTICATION_CLASSES': (
       'rest_framework_simplejwt.authentication.JWTAuthentication',

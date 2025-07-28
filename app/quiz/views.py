@@ -10,10 +10,10 @@ class UserViewSet(viewsets.ModelViewSet):
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['id']
 
-class QuizzesViewSet(viewsets.ModelViewSet):
+class QuizViewSet(viewsets.ModelViewSet):
 	queryset = Quiz.objects.all()
 	serializer_class = QuizSerializer
 
-class QuestionsViewSet(viewsets.ModelViewSet):
+class QuestionViewSet(viewsets.ModelViewSet):
 	queryset = Question.objects.all()
 	serializer_class = QuestionSerializer
