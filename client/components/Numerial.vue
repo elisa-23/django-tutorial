@@ -18,7 +18,8 @@ const props = defineProps<{
 const userAnswer = ref(0);
 
 const emit = defineEmits<{
-  (e: "answerSelected", choice: number): void;
+  answerSelected: [choice: number];
+  //(e: "answerSelected", choice: number): void;
 }>();
 
 function selectAnswer(choice: number) {

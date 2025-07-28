@@ -25,7 +25,8 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "answerSelected", choice: string  | string[]): void;
+  answerSelected: [choice: string | string[]];
+  //(e: "answerSelected", choice: string  | string[]): void;
 }>();
 
 function selectAnswer(choice: string | string[]) {

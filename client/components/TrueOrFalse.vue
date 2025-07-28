@@ -24,7 +24,8 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "answerSelected", choice: boolean): void;
+  answerSelected: [choice: boolean];
+  //(e: "answerSelected", choice: boolean): void;
 }>();
 
 function selectAnswer(choice: boolean) {
