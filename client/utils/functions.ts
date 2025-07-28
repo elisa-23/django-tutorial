@@ -87,3 +87,12 @@ export async function fetchEndpoint<T>(     //<T> a parameter
         throw error;
     }
 }
+
+
+export function shuffle<T>(array: T[]): T[] {
+  for (let i = array.length - 1; i >= 1; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[array[i], array[j]] = [array[j]!, array[i]!]   //! tells ts it's not undefined
+  }
+  return array
+}
