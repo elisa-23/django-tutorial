@@ -33,6 +33,10 @@ interface QuestionInstance {
 }
 const questions = ref<QuestionInstance[]>([]); //only questions' id and type, MERGE/SYNC "forms" AND "questions" LATER
 function addBlankQuestion(id: number, type: string) {
+  if (currentType.value === "") {
+    alert("no question type chosen");
+    return;
+  }
   currentQuesCount.value++;
   questions.value.push({ id: id, type: type });
   forms.value.push({
