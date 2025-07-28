@@ -12,7 +12,7 @@
       <option value="mc">Multiple Choice</option>
       <option value="tf">True or False</option>
       <option value="n">Numerical</option>
-      <option value="dd" disabled>DropDown</option>
+      <option value="dd">DropDown</option>
     </select>
     <button @click="addBlankQuestion(currentQuesCount, currentType)">
       Add Question
@@ -39,12 +39,22 @@ function addBlankQuestion(id: number, type: string) {
   }
   currentQuesCount.value++;
   questions.value.push({ id: id, type: type });
-  forms.value.push({
-    question: "",
-    answer: "",
-    incorrect: ["", "", ""],
-    quiz: 1, // figure out quiz id later
-  });
+
+  if (type === "dd") {
+    forms.value.push({
+      question: [""],
+      answer: [""],
+      incorrect: [[""]],
+      quiz: 1, // figure out quiz id later
+    });
+  } else {
+    forms.value.push({
+      question: "",
+      answer: "",
+      incorrect: ["", "", ""],
+      quiz: 1, // figure out quiz id later
+    });
+  }
 }
 function removeQuestion(index: number) {
   //only removes from questions array, emit is used in CreateQuestion component to remove whole thing
