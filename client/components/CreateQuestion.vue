@@ -1,123 +1,59 @@
-<!-- <template>
-    <div>
-        <div v-if="type === 'mc'">
-            <form action="">
-                <input type="text" placeholder="Question"/>
-                <input type="text" placeholder="Correct Answer"/>
-                <input v-for="n in 3" type="text" placeholder="Wrong Answer" :key="n"/>
-            </form>
-        </div>
-        <div v-if="type === 'tf'">
-            <form>
-                <input type="text" placeholder="Question"/>
-                <input type="radio" id="True" name="tf" value="True"/>
-                <label for="True">True</label><br/>
-                <input type="radio" id="False" name="tf" value="False"/>
-                <label for="False">False</label><br/>
-                <input type="submit" value="Submit"/>
-            </form>
-        </div>
-        <div v-if="type === 'n'">
-            <form action="">
-                <input type="text" placeholder="Question"/>
-                <input type="text" placeholder="Correct Answer"/>
-            </form>
-        </div>
-        <div v-if="type === 'dd'">
-            <!-- <form action="">
-                <input type="text" placeholder="Question">
-                <textarea name="" id=""></textarea>
-            </form> 
-            <form @sumbit.prevent="">
-                <div v-for="item in array">
-                    <input v-if="item === 'q'" type="text" placeholder="Question"/>
-                    <input v-if="item === 'b'" type="text" placeholder="Blank" :key="num" disabled>
-                </div>
-                <button @click.prevent="array.push('b', 'q');  num ++">Add a Blank</button>
-                <div v-for="item in array">
-                    <p v-if="item === 'b'">Blank: {{ num }}</p>
-                    <input v-if="item === 'b'" type="text" placeholder="Blank - answer" :key="'answer' + num" />
-                    <div class="incorrect" v-if="item === 'b'">
-                        <input v-for="index of n" type="text" placeholder="Incorrect Answer" :key="'incorrect' + num"/>
-                        <button v-if="n < 4" @click.prevent="n++">Add Incorrect Answers</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</template>
-
-<script setup lang="ts">
-const props = defineProps<{
-    type: string
-}>();
-
-const n = ref(2);
-const num = ref(0);
-const array = reactive<string[]>(['q']);
-
-</script>
-
-<style scoped>
-
-</style> -->
-
-<!-- ^old code -> test new one at school bc mac doesn't want to work :( -->
-
 <template>
-  <div>
+  <div class="card bg-slate-400">
+    <h2>{{ count }}</h2>
     <div v-if="type === 'mc'">
-      <form>
-        <input v-model="mc.question" type="text" placeholder="Question" />
-        <input
-          v-model="mc.correctAnswer"
-          type="text"
-          placeholder="Correct Answer"
-        />
-        <input
-          v-for="(answer, index) in mc.wrongAnswers"
-          :key="'wrong' + index"
-          v-model="mc.wrongAnswers[index]"
-          type="text"
-          placeholder="Wrong Answer"
-        />
-      </form>
+      <input type="text" placeholder="Question" v-model="modelValue.question" />
+      <input
+        type="text"
+        placeholder="Correct Answer"
+        v-model="modelValue.answer"
+      />
+      <!-- make correct ans more visible ig -->
+      <input
+        v-for="(value, index) in modelValue.incorrect"
+        type="text"
+        placeholder="Wrong Answer"
+        :key="index"
+        v-model="modelValue.incorrect[index]"
+      />
     </div>
 
     <div v-if="type === 'tf'">
-      <form>
-        <input v-model="tf.question" type="text" placeholder="Question" />
-        <input
-          type="radio"
-          id="True"
-          name="tf"
-          value="True"
-          v-model="tf.correctAnswer"
-        />
-        <label for="True">True</label><br />
-        <input
-          type="radio"
-          id="False"
-          name="tf"
-          value="False"
-          v-model="tf.correctAnswer"
-        />
-        <label for="False">False</label><br />
-        <input type="submit" value="Submit" />
-      </form>
+      <input type="text" placeholder="Question" v-model="modelValue.question" />
+      <input
+        type="radio"
+        id="True"
+        name="tf"
+        value="True"
+        v-model="modelValue.answer"
+      />
+      <label for="True">True</label><br />
+      <input
+        type="radio"
+        id="False"
+        name="tf"
+        value="False"
+        v-model="modelValue.answer"
+      />
+      <label for="False">False</label><br /><br />
     </div>
 
     <div v-if="type === 'n'">
-      <form>
-        <input v-model="n.question" type="text" placeholder="Question" />
-        <input
-          v-model="n.correctAnswer"
-          type="text"
-          placeholder="Correct Answer"
-        />
-      </form>
+      <input type="text" placeholder="Question" v-model="modelValue.question" />
+      <input
+        type="number"
+        placeholder="Correct Answer"
+        v-model="modelValue.answer"
+      />
     </div>
-
+    <!-- <div v-if="type === 'dd'">        DO LATER
+      <form action=""></form>
+      <button @click="addDropdown">add dropdown</button>
+      <div v-for="word in sentence">     sentence = ["word", "word", "", "word", ""]
+        <p v-if="word.length > 0">{{word}}</p>
+        <input v-if="word.length === 0" type="text">
+      </div>
+    </div> -->
     <div v-if="type === 'dd'">
       <form @submit.prevent="">
         <div v-for="(item, index) in ddArray" :key="'dd' + index">
@@ -153,36 +89,25 @@ const array = reactive<string[]>(['q']);
         <button @click.prevent="addBlank()">Add a Blank</button>
       </form>
     </div>
-
-    <PreviewCard
-      :type="type"
-      :question="getCurrentQuestion()"
-      :correctAnswer="getCurrentCorrectAnswer()"
-      :wrongAnswers="getCurrentWrongAnswers()"
-      :ddArray="type === 'dd' ? ddArray : undefined"
-    />
+    <button class="" @click="removeQuestion">Remove</button>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{ type: "mc" | "tf" | "n" | "dd" }>();
+const props = defineProps<{
+  type: string;
+  count: number;
+}>();
 
-// define objects for each question type
-const mc = reactive({
-  question: "",
-  correctAnswer: "",
-  wrongAnswers: ["", "", ""],
-});
+const modelValue = defineModel<Question>({ required: true });
 
-const tf = reactive({
-  question: "",
-  correctAnswer: "",
-});
+const emit = defineEmits<{
+  (e: "remove"): void;
+}>();
 
-const n = reactive({
-  question: "",
-  correctAnswer: "",
-});
+function removeQuestion() {
+  emit("remove");
+}
 
 const ddArray = reactive<
   Array<{
@@ -198,26 +123,6 @@ function addBlank() {
     { type: "b", correct: "", incorrect: [] },
     { type: "q", value: "", incorrect: [] }
   );
-}
-
-// functions for the preview card
-function getCurrentQuestion(): string {
-  if (props.type === "mc") return mc.question;
-  if (props.type === "tf") return tf.question;
-  if (props.type === "n") return n.question;
-  return "";
-}
-
-function getCurrentCorrectAnswer(): string {
-  if (props.type === "mc") return mc.correctAnswer;
-  if (props.type === "tf") return tf.correctAnswer;
-  if (props.type === "n") return n.correctAnswer;
-  return "";
-}
-
-function getCurrentWrongAnswers(): string[] {
-  if (props.type === "mc") return mc.wrongAnswers;
-  return [];
 }
 </script>
 
