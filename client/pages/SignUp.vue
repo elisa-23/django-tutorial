@@ -5,12 +5,12 @@
             <p>Choose a role:</p>
             <select name="roles" v-model="role" required placeholder="Choose a role">
                 <option 
-                    :value="(1, 'user')" 
+                    :value="1" 
                     title="USER: This role is the basic role with minimal previleges. *NOTE: This role CANNOT create quizzes.">
                     user
                 </option>
                 <option 
-                    :value="(2, 'supervisor')" 
+                    :value="2" 
                     title="SUPERVISOR: This role is an advanced role with similar features as the USER. *NOTE: This role CAN create quizzes">
                     supervisor
                 </option>
@@ -52,7 +52,7 @@ const role = ref("");
 const userInfo = reactive<User>({
     email: "",
     id: 0,
-    role: (1, 'user'), // Default role set to 'user'
+    role: 1, // Default role set to 'user'
     // You can change this to 'supervisor' if needed
     username: "",
     accessToken: "",
@@ -71,7 +71,6 @@ async function signup() {
     const existing = await fetchEndpoint<any[]>('/users/') || [];
     console.log(email.value, username.value, existing);
     for (const user of existing) {
-        console.log(user);
         if (user.email === email.value) {
             return emailExists.value = true;
         }

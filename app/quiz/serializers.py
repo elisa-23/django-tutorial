@@ -15,6 +15,15 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id', 'role', 'username', 'email', 'password']
+    password = serializers.CharField(write_only=True)
+    def create(self, validated_data):
+        user = CustomUser.objects.create_user(
+            email=validated_data['email'],
+            password=validated_data['password'],
+            username=validated_data['username'],
+            role=validated_data['role']
+        )
+        return user
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
