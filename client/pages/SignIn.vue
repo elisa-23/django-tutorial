@@ -80,5 +80,8 @@ async function signin() {
     }
     email.value = "";
     password.value = "";
+    
+    //check user successfully signed in in console
+    console.log("User signed in successfully:", userInfo);
 }
 </script>

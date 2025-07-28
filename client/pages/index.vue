@@ -20,8 +20,8 @@ async function handleLogin() {
     access: string;
     refresh: string;
   }>("/api/token/", "POST", {
-    email: "hu@gmail.com",
-    password: "huhu",
+    email: "elisahu@gmail.com",
+    password: "huhuhu",
   });
   console.log(token);
 }

@@ -1,15 +1,11 @@
 <template>
-    <div>
-        <AppHeader/>
-        <slot></slot>
-        <AppFooter/>
-    </div>
+  <div class="flex flex-row">
+    <AppHeader />
+    <slot></slot>
+    <AppFooter />
+  </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped>
-
-</style>
+<style scoped></style>
