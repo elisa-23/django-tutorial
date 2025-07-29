@@ -1,7 +1,7 @@
 <template>
   <div class="card bg-slate-400">
     <h2>{{ count }}</h2>
-    <div v-if="type === 'mc'">
+    <div v-if="type === 'multipleChoice'">
       <input type="text" placeholder="Question" v-model="modelValue.question" />
       <input
         type="text"
@@ -18,7 +18,7 @@
       />
     </div>
 
-    <div v-if="type === 'tf'">
+    <div v-if="type === 'trueOrFalse'">
       <input type="text" placeholder="Question" v-model="modelValue.question" />
       <input
         type="radio"
@@ -38,7 +38,7 @@
       <label for="False">False</label><br /><br />
     </div>
 
-    <div v-if="type === 'n'">
+    <div v-if="type === 'numerical'">
       <input type="text" placeholder="Question" v-model="modelValue.question" />
       <input
         type="number"
@@ -47,7 +47,7 @@
       />
     </div>
 
-    <!-- <div v-if="type === 'dd'">
+    <!-- <div v-if="type === 'dropDown'">
       <input
         type="text"
         placeholder="Dropdown Title"

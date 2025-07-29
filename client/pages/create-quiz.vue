@@ -9,10 +9,10 @@
       v-model="forms[index]"
     />
     <select name="" id="" v-model="currentType">
-      <option value="mc">Multiple Choice</option>
-      <option value="tf">True or False</option>
-      <option value="n">Numerical</option>
-      <option value="dd" disabled>DropDown</option>
+      <option value="multipleChoice">Multiple Choice</option>
+      <option value="trueOrFalse">True or False</option>
+      <option value="numerical">Numerical</option>
+      <option value="dropDown" disabled>DropDown</option>
     </select>
     <button @click="addBlankQuestion(currentQuesCount, currentType)">
       Add Question
@@ -24,23 +24,33 @@
 
 <script setup lang="ts">
 const title = ref("");
-const currentType = ref("");
+const currentType = ref("multipleChoice");
 const currentQuesCount = ref(0);
+const quizTypes = <number[]>[];
 const forms = ref<Question[]>([]); //the actual question data with answers+incorrect
 interface QuestionInstance {
   id: number;
   type: string;
 }
+const questionTypes = {
+  multipleChoice: 1,
+  trueOrFalse: 2,
+  dropDown: 3,
+  numerical: 4,
+};
 const questions = ref<QuestionInstance[]>([]); //only questions' id and type, MERGE/SYNC "forms" AND "questions" LATER
-function addBlankQuestion(id: number, type: string) {
+function addBlankQuestion(
+  id: number,
+  type: "multipleChoice" | "trueOrFalse" | "dropDown" | "numerical"
+) {
   if (currentType.value === "") {
     alert("no question type chosen");
     return;
   }
   currentQuesCount.value++;
   questions.value.push({ id: id, type: type });
-
-  if (type === "dd") {
+  quizTypes.push(questionTypes[type]);
+  if (type === "dropDown") {
     forms.value.push({
       question: "",
       answer: [""],
@@ -66,14 +76,23 @@ function removeQuestion(index: number) {
   currentQuesCount.value--;
   questions.value.splice(index, 1);
 }
+
+const userStore = useUserStore();
+
 async function createQuiz() {
   console.log("All questions:", forms.value);
-  const response = await fetchEndpoint<Quiz>("/quiz/", "POST", {
-    id: 1,
+  console.log("user:", userStore.userInfo);
+  const createdQuiz = await fetchEndpoint<Quiz>("/quizzes/", "POST", {
+    id: 1, //figure out later
     title: title.value,
-    creator: "test",
+    creator: 1,
+    types: quizTypes,
   });
-  console.log(response);
+  if (!createdQuiz) {
+    alert("Failed to create quiz. Please try again.");
+    return;
+  }
+  console.log(createdQuiz);
   //add quiz to api
   //add questions to api
 }

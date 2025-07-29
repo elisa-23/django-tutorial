@@ -28,5 +28,6 @@ export interface Question {
 export interface Quiz {
     id: number
     title: string
-    creator: string
+    creator: number
+    types: number[]
 }

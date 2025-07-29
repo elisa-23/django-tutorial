@@ -2,29 +2,24 @@
 
 ### How to Install Django?
 
-1. Install Python
+1.  Install Python
 
-2. Setup Vitual Enviornment
-
-
+2.  Setup Vitual Enviornment
 
         a. python -m venv venv (or whatever you like ) <!-- on macOS: python3 -m venv venv -->
 
         b. Windows: venv\Scripts\activate        <!-- how you activate Venv -->         <!-- write "deactivate" to deactivate venv -->
            MacOS/Unix: source venv/bin/activate
 
-3. Install Django
-
+3.  Install Django
 
         python -m pip install Django
 
-4. Install a Django Project 
-
+4.  Install a Django Project
 
         django-admin startproject my_tennis_club (or whatever you like)
 
-5. Install Django App
-
+5.  Install Django App
 
         cd my_tennis_club (or whatever you named the project)
         python manage.py startapp members (or whatever you like)
@@ -49,7 +44,7 @@ If it doesn't work look at settings.py to see if you added it to the installed a
 
 If it worked there should be a new file in your migrations folder.
 
-Then run: 
+Then run:
 
         python manage.py migrate
 
@@ -59,7 +54,7 @@ Then run:
         >>> from members.models import Member (or whatever you named it)
         >>> Member.objects.all()
 
-Returns: 
+Returns:
 
         <QuerySet []>
 
@@ -88,3 +83,5 @@ To see table values:
 Other functions for the data: [text](https://www.w3schools.com/django/django_update_data.php)
 
 To close py shell: run exit() or quit()
+
+create admin acc: python manage.py createsuperuser
