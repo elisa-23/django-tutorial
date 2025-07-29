@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 async function handleLogin() {
-  const token = await requestEndpoint<{
+  const token = await fetchEndpoint<{
     access: string;
     refresh: string;
   }>("/api/token/", "POST", {

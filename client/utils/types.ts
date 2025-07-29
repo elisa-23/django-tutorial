@@ -25,7 +25,7 @@ export interface Quiz {
     id: number
     title: string
     creator: number
-    types: number[]
+    types: number[] | string[]
 }
 
 export type QuestionType = "multipleChoice" | "trueOrFalse" | "dropDown" | "numerical"

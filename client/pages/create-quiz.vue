@@ -56,9 +56,10 @@ function addBlankQuestion(type: QuestionType) {
   }
 }
 function removeQuestion(index: number) {
-  //only removes from questions array, emit is used in CreateQuestion component to remove whole component
+  //only removes from questions array & quizTypes, emit is used in CreateQuestion component to remove whole component
   currentQuesCount.value--;
   questionData.value.splice(index, 1);
+  quizTypes.splice(index, 1);
 }
 
 const userStore = useUserStore();

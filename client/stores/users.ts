@@ -58,7 +58,7 @@ export const useUserStore = defineStore('user', {
                 alert("Failed to create user. Please try again.");
                 return;
             }
-            //await this.signIn(email, password, createdUser);
+            await this.signIn(email, password, createdUser);
         },
         async signOut() {
             this.isSignedIn = false;
