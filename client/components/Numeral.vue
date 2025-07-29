@@ -2,9 +2,9 @@
   <div>
     <h1>{{ question.question }}</h1>
     <div>
-      <form @sumbit.prevent="selectAnswer(userAnswer)">
+      <form @submit.prevent="selectAnswer(userAnswer)">
         <input type="number" v-model="userAnswer" required />
-        <button type="submit"></button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   </div>

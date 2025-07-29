@@ -42,7 +42,7 @@ onMounted(() => {
 });
 
 const emit = defineEmits<{
-  answerSelected: [choice: string[]]; //better way to emit - change all the other components later to match
+  answerSelected: [choice: string[]];
   //(e: "answerSelected", choice: string[]): void;
 }>();
 

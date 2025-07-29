@@ -12,32 +12,36 @@
         <MultipleChoice
           v-if="currentQuestion?.type === 'mc'"
           :question="currentQuestion!"
+          @answerSelected="handleAnswer"
         />
         <TrueOrFalse
           v-if="currentQuestion?.type === 'tf'"
           :question="currentQuestion!"
+          @answerSelected="handleAnswer"
         />
         <Numeral
           v-if="currentQuestion?.type === 'n'"
           :question="currentQuestion!"
+          @answerSelected="handleAnswer"
         />
         <DropDown
           v-if="currentQuestion?.type === 'dd'"
           :question="currentQuestion!"
+          @answerSelected="handleAnswer"
         />
       </div>
-      <div v-else>
+      <!-- <div v-else>
         <p>Quiz completed!</p>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const sampleQuiz = <Quiz>{
+const sampleQuiz: Quiz = {
   id: 0,
   title: "Sample Quiz",
-  creator: "elisa",
+  creator: "Someone",
   questions: [
     {
       question: "What is the capital of France?",
@@ -50,12 +54,14 @@ const sampleQuiz = <Quiz>{
       question: "Is the sky blue?",
       type: "tf",
       answer: true,
+      incorrect: [],
       quizId: 0,
     },
     {
       question: "What is 2 + 2?",
       type: "n",
       answer: 4,
+      incorrect: [],
       quizId: 0,
     },
     {
@@ -88,20 +94,36 @@ function nextQuestion() {
   }
 }
 
-function answerQuestion(choice: string | string[] | boolean | number) {}
+function handleAnswer(choice: string | string[] | boolean | number) {
+  if (!currentQuestion.value) return;
 
-/* async function fetchQuiz(quizId: number) {
-  const response = await fetch(`/quizzes/${quizId}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch quiz");
+  const question = currentQuestion.value;
+
+  if (question.type === "dd") {
+    if (Array.isArray(question.answer) && Array.isArray(choice)) {
+      const correct = choice.every(
+        (c, index) =>
+          Array.isArray(question.answer) && c === question.answer[index]
+      );
+      if (correct) {
+        console.log("Correct!");
+      } else {
+        console.log("Incorrect!");
+      }
+    } else {
+      console.log("Invalid choice for dropdown question.");
+    }
+    nextQuestion();
+    return;
   }
-  const data = response.json();
-  return data;
-}
 
-onMounted(async () => {
-  await fetchQuiz(0);
-}); */
+  if (choice === question.answer) {
+    console.log("Correct!");
+  } else {
+    console.log("Incorrect!");
+  }
+  nextQuestion();
+}
 </script>
 
 <style scoped></style>

@@ -5,7 +5,7 @@
       <ul class="space-y-3">
         <li
           v-for="(choice, index) in shuffle([
-            question.answer,
+            question.answer as string,
             ...question.incorrect,
           ])"
           :key="index"

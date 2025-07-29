@@ -1,20 +1,8 @@
 <template>
-  <div>
-    <DropDown :question="question" />
-  </div>
+  <div></div>
 </template>
 
 <script setup lang="ts">
-const question = <Question>{
-  question: "dhsagfhkh [Blank 1] uhsaifhiu [Blank 2] ahfkhklkg",
-  answer: ["a1", "a2"],
-  incorrect: [
-    ["l1", "l2", "l3"],
-    ["l4", "l5", "l6"],
-  ],
-  quizId: 1,
-};
-
 async function handleLogin() {
   const token = await requestEndpoint<{
     access: string;
