@@ -57,9 +57,6 @@ function addBlankQuestion(
       incorrect: [[""]],
       type: "dd",
       quiz: 1, // figure out quiz id later
-      /* parts: [
-        { type: "questionPart", text: "" }, // optional: start with a question part
-      ], */
     });
   } else {
     forms.value.push({
@@ -82,10 +79,10 @@ const userStore = useUserStore();
 async function createQuiz() {
   console.log("All questions:", forms.value);
   console.log("user:", userStore.userInfo);
+  //add quiz to api
   const createdQuiz = await fetchEndpoint<Quiz>("/quizzes/", "POST", {
-    id: 1, //figure out later
     title: title.value,
-    creator: 1,
+    creator: userStore.userInfo.id,
     types: quizTypes,
   });
   if (!createdQuiz) {
@@ -93,8 +90,20 @@ async function createQuiz() {
     return;
   }
   console.log(createdQuiz);
-  //add quiz to api
+
   //add questions to api
+  forms.value.forEach(async (question) => {
+    const createdQuestion = await fetchEndpoint<Question>(
+      "/questions/",
+      "POST",
+      question
+    );
+    if (!createdQuestion) {
+      alert("Failed to create question. Please try again.");
+      return;
+    }
+    console.log(createdQuestion);
+  });
 }
 </script>
 
