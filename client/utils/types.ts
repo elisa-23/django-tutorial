@@ -15,7 +15,7 @@ export interface UserForm {
 
 export interface Question {
     question: string
-    answer: string|string[]
+    answer: string | string[] | boolean | number;
     incorrect: string[] | string[][]
     type: QuestionType
     quiz?: number

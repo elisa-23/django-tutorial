@@ -1,16 +1,16 @@
 <template>
   <div>
-    <h2>{{ question.question }}</h2>
-    <div class="space-y-3">
+    <h1>{{ question.question }}</h1>
+    <div class="flex items-center space-x-4">
       <button
         class="px-4 py-2 hover:bg-blue-100 rounded cursor-pointer transition"
-        @click="selectAnswer('True')"
+        @click="selectAnswer(true)"
       >
         True
       </button>
       <button
         class="px-4 py-2 hover:bg-blue-100 rounded cursor-pointer transition"
-        @click="selectAnswer('False')"
+        @click="selectAnswer(false)"
       >
         False
       </button>
@@ -22,11 +22,13 @@
 const props = defineProps<{
   question: Question;
 }>();
+
 const emit = defineEmits<{
-  (e: "answerSelected", choice: string): void;
+  answerSelected: [choice: boolean];
+  //(e: "answerSelected", choice: boolean): void;
 }>();
 
-function selectAnswer(choice: string) {
+function selectAnswer(choice: boolean) {
   emit("answerSelected", choice);
 }
 </script>

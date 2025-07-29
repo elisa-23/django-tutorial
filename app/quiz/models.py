@@ -51,6 +51,7 @@ class Question(models.Model):
     answer = models.JSONField(default=list)
     incorrect = models.JSONField(default=list, blank=True, null=True)
     quiz = models.ForeignKey(Quiz, null=False, on_delete=models.CASCADE)
+    question_type = models.IntegerField(null=False, default=1)  
 
     def __str__(self):
         return str(self.id)

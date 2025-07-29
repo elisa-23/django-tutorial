@@ -48,6 +48,8 @@ async function signin() {
     await userStore.signIn(email.value, password.value, userInfo);
     email.value = "";
     password.value = "";
-    console.log(userInfo)
+    
+    //check user successfully signed in in console
+    console.log("User signed in successfully:", userInfo);
 }
 </script>

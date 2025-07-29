@@ -28,7 +28,12 @@ class UserSerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ['id', 'question', 'answer', 'incorrect', 'quiz']
+        fields = ['id', 'question', 'answer', 'incorrect', 'quiz', 'question_type']
+    def validate_question_type(self, value):
+        valid_choices = [1, 2, 3, 4]
+        if value not in valid_choices:
+            raise serializers.ValidationError("Invalid choice for 'question_type'.")
+        return value
 
 class QuizSerializer(serializers.ModelSerializer):
     class Meta:
