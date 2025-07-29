@@ -49,16 +49,6 @@ const password = ref("");
 const check = ref("");
 const role = ref(0);
 
-const userInfo = reactive<User>({
-    email: "",
-    id: 0,
-    role: 1, // Default role set to 'user'
-    // You can change this to 'supervisor' if needed
-    username: "",
-    accessToken: "",
-    refreshToken: "",
-});
-
 const emailExists = ref(false);
 const usernameExists = ref(false);
 
@@ -82,4 +72,14 @@ async function signup() {
     }
     await userStore.signUp(email.value, password.value, username.value, role.value);
 }
+
+onMounted(() => {
+    email.value = "";
+    username.value = "";
+    password.value = "";
+    check.value = "";
+    role.value = 0;
+    emailExists.value = false;
+    usernameExists.value = false;
+});
 </script>

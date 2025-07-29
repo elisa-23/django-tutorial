@@ -15,6 +15,22 @@
           Sign In
         </button>
       </NuxtLink>
+      <NuxtLink to="/play-quiz">
+        <button
+          v-if="signin"
+          class="bg-white rounded-md w-[100%] h-[50%] text-center hover:bg-[#E6E6FA] active:bg-[#CCCCFF] m-auto"
+        >
+          Play Quiz
+        </button>
+      </NuxtLink>
+      <NuxtLink to="/create-quiz">
+        <button
+          v-if="signin && role === 2"
+          class="bg-white rounded-md w-[100%] h-[50%] text-center hover:bg-[#E6E6FA] active:bg-[#CCCCFF] m-auto"
+        >
+          Create Quiz
+        </button>
+      </NuxtLink>
       <button
         v-if="signin"
         class="bg-white rounded-md w-[100%] h-[50%] text-center hover:bg-[#E6E6FA] active:bg-[#CCCCFF] m-auto"
@@ -30,6 +46,7 @@
 const userStore = useUserStore();
 const signin = computed(() => userStore.isSignedIn);
 const username = computed(() => userStore.userInfo.username);
+const role = computed(() => userStore.userInfo.role);
 </script>
 
 <style lang="scss" scoped></style>
