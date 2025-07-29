@@ -47,7 +47,7 @@ const email = ref("");
 const username = ref("");
 const password = ref("");
 const check = ref("");
-const role = ref("");
+const role = ref(0);
 
 const userInfo = reactive<User>({
     email: "",
@@ -61,6 +61,8 @@ const userInfo = reactive<User>({
 
 const emailExists = ref(false);
 const usernameExists = ref(false);
+
+const userStore = useUserStore();
 
 async function signup() {
     if (check.value !== password.value) {
@@ -78,14 +80,6 @@ async function signup() {
             return usernameExists.value = true;
         }
     }
-
-    const createdUser = await fetchEndpoint<User>('/users/', 'POST', {
-        email: email.value,
-        username: username.value,
-        password: password.value,
-        role: role.value,
-    });
-
-    console.log(createdUser);
+    await userStore.signUp(email.value, password.value, username.value, role.value);
 }
 </script>

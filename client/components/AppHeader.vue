@@ -15,11 +15,19 @@
           Sign In
         </button>
       </NuxtLink>
+      <button
+        v-if="signin"
+        class="bg-white rounded-md w-[100%] h-[50%] text-center hover:bg-[#E6E6FA] active:bg-[#CCCCFF] m-auto"
+        @click="userStore.signOut"
+      >
+        Sign Out
+      </button>
     </div>
   </div>
 </template>
 
 <script setup>
-const username = "example";
-let signin = false;
+const userStore = useUserStore();
+const signin = computed(() => userStore.isSignedIn);
+const username = computed(() => userStore.userInfo.username);
 </script>
