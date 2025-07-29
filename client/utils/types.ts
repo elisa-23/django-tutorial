@@ -17,8 +17,8 @@ export interface Question {
     question: string
     answer: string|string[]
     incorrect: string[] | string[][]
-    type: string
-    quiz: number
+    type: QuestionType
+    quiz?: number
 }
 
 export interface Quiz {
@@ -27,3 +27,5 @@ export interface Quiz {
     creator: number
     types: number[]
 }
+
+export type QuestionType = "multipleChoice" | "trueOrFalse" | "dropDown" | "numerical"
