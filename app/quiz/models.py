@@ -12,6 +12,11 @@ class CustomUserManager(BaseUserManager):
         user.set_password(password)  # Ensures the password is hashed
         user.save(using=self._db)
         return user
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('role', CustomUser.SUPERVISOR)
+        return self.create_user(email, password, **extra_fields)
 
 # Create your models here.
 class CustomUser(AbstractUser):

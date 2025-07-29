@@ -23,8 +23,10 @@ from rest_framework_simplejwt import views as jwt_views
 router = DefaultRouter()
 router.register(r"users", UserViewSet)
 router.register(r"quizzes", QuizViewSet)
+router.register(r"questions", QuestionViewSet)
+# The order of urlpatterns is important; the first match will be used.
 
-urlpatterns = [     #order matters
+urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', UserViewSet.as_view({'get': 'list'}), name='user'),
     path('quiz/', QuizViewSet.as_view({'get': 'list'}), name='quiz'),
@@ -38,5 +40,8 @@ urlpatterns = [     #order matters
     path('api/token/verify/',
          jwt_views.TokenVerifyView.as_view(),
          name ='token_verify'),
+    path('api/logout/', 
+         jwt_views.TokenBlacklistView.as_view(), 
+         name='logout'),
     path('', include(router.urls))
 ]

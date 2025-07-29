@@ -1,7 +1,7 @@
 export const useUserStore = defineStore('user', {
     state: () => ({
         isSignedIn: false,
-        userInfo: null as User | null
+        userInfo: <User>{}
     }),
     actions: {
         async signIn(email: string, password: string, userInfo: User) {
@@ -62,7 +62,12 @@ export const useUserStore = defineStore('user', {
         },
         async signOut() {
             this.isSignedIn = false;
-            this.userInfo = null;
+            this.userInfo = { email: '', id: 0, role: '', username: '', accessToken: '', refreshToken: '' };
+            // Optionally, you can also blacklist the refresh token on the server
+            const token = this.userInfo?.refreshToken;
+            if (token) {
+                await fetchEndpoint('/api/token/blacklist/', 'POST', { refresh: token });
+            }
         }
     }
 })
