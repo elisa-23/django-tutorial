@@ -23,12 +23,8 @@ from rest_framework_simplejwt import views as jwt_views
 router = DefaultRouter()
 router.register(r"users", UserViewSet)
 router.register(r"quiz", QuizViewSet)
-<<<<<<< Updated upstream
 router.register(r"questions", QuestionViewSet)
 # The order of urlpatterns is important; the first match will be used.
-=======
->>>>>>> Stashed changes
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', UserViewSet.as_view({'get': 'list'}), name='user'),
