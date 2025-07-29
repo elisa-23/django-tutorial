@@ -8,10 +8,10 @@
 
 
 
-        a. python -m venv myworld (or whatever you like )
+        a. python -m venv venv (or whatever you like ) <!-- on macOS: python3 -m venv venv -->
 
-        b. Windows: myworld\Scripts\activate        <!-- how you activate Venv -->
-           MacOS/Unix: source myworld/bin/activate
+        b. Windows: venv\Scripts\activate        <!-- how you activate Venv -->         <!-- write "deactivate" to deactivate venv -->
+           MacOS/Unix: source venv/bin/activate
 
 3. Install Django
 
