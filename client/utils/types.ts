@@ -14,14 +14,15 @@ export interface UserForm {
 }
 
 export interface Question {
-    question: string|string[]
+    question: string
     answer: string|string[]
     incorrect: string[] | string[][]
+    type: string
     quiz: number
-    parts?:Array<
+    /* parts?:Array<
     | { type: "questionPart"; text: string }
     | { type: "blank"; answer: string; incorrect: string[] }
-  >;
+  >; */
 }
 
 export interface Quiz {

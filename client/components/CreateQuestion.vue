@@ -47,7 +47,7 @@
       />
     </div>
 
-    <div v-if="type === 'dd'">
+    <!-- <div v-if="type === 'dd'">
       <input
         type="text"
         placeholder="Dropdown Title"
@@ -97,7 +97,7 @@
         <button @click.prevent="addQuestionPart">Add Question Text</button>
         <button @click.prevent="addBlankPart">Add Blank</button>
       </div>
-    </div>
+    </div> -->
 
     <button class="" @click="removeQuestion">Remove</button>
   </div>
@@ -127,7 +127,7 @@ function removeQuestion() {
   }>
 >([{ type: "q", value: "" }]); */
 
-function addQuestionPart() {
+/* function addQuestionPart() {
   if (modelValue.value.parts) {
     modelValue.value.parts.push({
       type: "questionPart",
@@ -155,7 +155,7 @@ function addIncorrectOption(index: number) {
       }
     }
   }
-}
+} */
 </script>
 
 <style scoped></style>

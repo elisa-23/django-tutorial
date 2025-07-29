@@ -12,7 +12,7 @@
       <option value="mc">Multiple Choice</option>
       <option value="tf">True or False</option>
       <option value="n">Numerical</option>
-      <option value="dd">DropDown</option>
+      <option value="dd" disabled>DropDown</option>
     </select>
     <button @click="addBlankQuestion(currentQuesCount, currentType)">
       Add Question
@@ -42,19 +42,21 @@ function addBlankQuestion(id: number, type: string) {
 
   if (type === "dd") {
     forms.value.push({
-      question: [""],
+      question: "",
       answer: [""],
       incorrect: [[""]],
+      type: "dd",
       quiz: 1, // figure out quiz id later
-      parts: [
+      /* parts: [
         { type: "questionPart", text: "" }, // optional: start with a question part
-      ],
+      ], */
     });
   } else {
     forms.value.push({
       question: "",
       answer: "",
       incorrect: ["", "", ""],
+      type: type,
       quiz: 1, // figure out quiz id later
     });
   }
@@ -64,8 +66,14 @@ function removeQuestion(index: number) {
   currentQuesCount.value--;
   questions.value.splice(index, 1);
 }
-function createQuiz() {
+async function createQuiz() {
   console.log("All questions:", forms.value);
+  const response = await fetchEndpoint<Quiz>("/quiz/", "POST", {
+    id: 1,
+    title: title.value,
+    creator: "test",
+  });
+  console.log(response);
   //add quiz to api
   //add questions to api
 }
