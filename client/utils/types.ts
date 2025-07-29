@@ -17,7 +17,7 @@ export interface Question {
   question: string;
   answer: string | string[] | boolean | number;
   incorrect: string[] | string[][];
-  type: string;
+  question_type: number;
   quizId: number;
 }
 
