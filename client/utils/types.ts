@@ -15,9 +15,6 @@ export interface UserForm {
 
 export interface Question {
     question: string
-    answer: string | string[] | boolean | number;
-    incorrect: string[] | string[][]
-    type: QuestionType
     quiz?: number
 }
 
@@ -29,3 +26,26 @@ export interface Quiz {
 }
 
 export type QuestionType = "multipleChoice" | "trueOrFalse" | "dropDown" | "numerical"
+
+export interface MultipleChoiceQuestion extends Question {
+    type: "multipleChoice"
+    answer: string
+    incorrect: string[]
+}
+
+export interface TrueOrFalseQuestion extends Question {
+    type: "trueOrFalse"
+    answer: boolean
+    incorrect: boolean
+}
+
+export interface NumericalQuestion extends Question {
+    type: "numerical"
+    answer: number
+}
+
+export interface DropdownQuestion extends Question {
+    type: "numerical"
+    answer: string[]
+    incorrect: string[][]
+}

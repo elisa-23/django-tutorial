@@ -24,21 +24,15 @@
 const title = ref("");
 const currentType = ref<QuestionType>("multipleChoice");
 const currentQuesCount = ref(0);
-const quizTypes = <number[]>[];
+const quizTypes = <QuestionType[]>[];
 const questionData = ref<Question[]>([]); //the actual question data with answers+incorrect
-const questionTypes = {
-  multipleChoice: 1,
-  trueOrFalse: 2,
-  dropDown: 3,
-  numerical: 4,
-};
 function addBlankQuestion(type: QuestionType) {
   /* if (currentType.value === "") {
     alert("no question type chosen");
     return;
   } */
   currentQuesCount.value++;
-  quizTypes.push(questionTypes[type]);
+  quizTypes.push(type);
   if (type === "dropDown") {
     questionData.value.push({
       question: "",
