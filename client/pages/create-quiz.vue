@@ -6,7 +6,7 @@
       :type="question.type"
       :count="index + 1"
       @remove="removeQuestion(index)"
-      v-model="questionData[index]"
+      v-model="questionData[index]!"
     />
     <select name="" id="" v-model="currentType">
       <option value="multiple_choice">Multiple Choice</option>
@@ -25,12 +25,7 @@ const title = ref("");
 const currentType = ref<QuestionType>("multiple_choice");
 const currentQuesCount = ref(0);
 const quizTypes = <QuestionType[]>[];
-const questionData = ref<
-  | MultipleChoiceQuestion[]
-  | TrueOrFalseQuestion[]
-  | NumericalQuestion[]
-  | DropDownQuestion[]
->([]); // interface Question doesn't have ans/incorrect/type
+const questionData = ref<CreateQuestion[]>([]);
 function addBlankQuestion(type: QuestionType) {
   /* if (currentType.value === "") {
     alert("no question type chosen");
@@ -38,7 +33,7 @@ function addBlankQuestion(type: QuestionType) {
   } */
   currentQuesCount.value++;
   quizTypes.push(type);
-  let emptyQuestion; // says its being used before declared if not declared here
+  let emptyQuestion: CreateQuestion; // says its being used before declared if not declared here
   if (type === "dropdown") {
     emptyQuestion = {
       question: "",
@@ -57,7 +52,6 @@ function addBlankQuestion(type: QuestionType) {
     emptyQuestion = {
       question: "",
       answer: true, //how to use default boolean here
-      incorrect: false,
       type: "true/false",
     };
   } else if (type === "numerical") {
@@ -65,10 +59,9 @@ function addBlankQuestion(type: QuestionType) {
       question: "",
       answer: 0, // use default num
       type: "numerical",
-      incorrect: null,
     };
   }
-  questionData.value.push(emptyQuestion); // says cannot find name emptyQuestion if declared inside if/else
+  questionData.value.push(emptyQuestion!); // says cannot find name emptyQuestion if declared inside if/else
 }
 function removeQuestion(index: number) {
   //only removes from questions array & quizTypes, emit is used in CreateQuestion component to remove whole component
@@ -97,7 +90,7 @@ async function createQuiz() {
   const currentQuizID = createdQuiz.id;
   //add questions to api
   questionData.value.forEach(async (question) => {
-    const createdQuestion = await fetchEndpoint<Question>(
+    const createdQuestion = await fetchEndpoint<CreateQuestion>(
       "/questions/",
       "POST",
       { ...question, quiz: currentQuizID }

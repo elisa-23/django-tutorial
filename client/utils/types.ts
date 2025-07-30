@@ -27,26 +27,26 @@ export interface Quiz {
 
 export type QuestionType = "multiple_choice" | "true/false" | "dropdown" | "numerical"
 
-export interface MultipleChoiceQuestion extends BaseQuestion {
+export interface CreateMultipleChoiceQuestion extends BaseQuestion {
     type: "multiple_choice"
     answer: string
     incorrect: string[]
 }
 
-export interface TrueOrFalseQuestion extends BaseQuestion {
+export interface CreateTrueOrFalseQuestion extends BaseQuestion {
     type: "true/false"
     answer: boolean
-    incorrect: boolean
 }
 
-export interface NumericalQuestion extends BaseQuestion {
+export interface CreateNumericalQuestion extends BaseQuestion {
     type: "numerical"
     answer: number
-    incorrect: null
 }
 
-export interface DropDownQuestion extends BaseQuestion {
+export interface CreateDropDownQuestion extends BaseQuestion {
     type: "dropdown"
     answer: string[]
     incorrect: string[][]
 }
+
+export type CreateQuestion = CreateMultipleChoiceQuestion | CreateTrueOrFalseQuestion | CreateNumericalQuestion | CreateDropDownQuestion

@@ -110,12 +110,7 @@ const props = defineProps<{
 }>();
 
 //const modelValue = defineModel<Question>({ required: true });
-const modelValue = defineModel<
-  | MultipleChoiceQuestion
-  | TrueOrFalseQuestion
-  | NumericalQuestion
-  | DropDownQuestion
->({ required: true });
+const modelValue = defineModel<CreateQuestion>({ required: true });
 
 const emit = defineEmits<{
   (e: "remove"): void;
