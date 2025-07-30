@@ -9,10 +9,10 @@
       v-model="questionData[index]"
     />
     <select name="" id="" v-model="currentType">
-      <option value="multipleChoice">Multiple Choice</option>
-      <option value="trueOrFalse">True or False</option>
+      <option value="multiple_choice">Multiple Choice</option>
+      <option value="true/false">True or False</option>
       <option value="numerical">Numerical</option>
-      <option value="dropDown" disabled>DropDown</option>
+      <option value="dropdown" disabled>DropDown</option>
     </select>
     <button @click="addBlankQuestion(currentType)">Add Question</button>
     <p>Number of Questions: {{ currentQuesCount }}</p>
@@ -22,10 +22,15 @@
 
 <script setup lang="ts">
 const title = ref("");
-const currentType = ref<QuestionType>("multipleChoice");
+const currentType = ref<QuestionType>("multiple_choice");
 const currentQuesCount = ref(0);
 const quizTypes = <QuestionType[]>[];
-const questionData = ref<Question[]>([]); //the actual question data with answers+incorrect
+const questionData = ref<
+  | MultipleChoiceQuestion[]
+  | TrueOrFalseQuestion[]
+  | NumericalQuestion[]
+  | DropDownQuestion[]
+>([]); // interface Question doesn't have ans/incorrect/type
 function addBlankQuestion(type: QuestionType) {
   /* if (currentType.value === "") {
     alert("no question type chosen");
@@ -33,21 +38,37 @@ function addBlankQuestion(type: QuestionType) {
   } */
   currentQuesCount.value++;
   quizTypes.push(type);
-  if (type === "dropDown") {
-    questionData.value.push({
+  let emptyQuestion; // says its being used before declared if not declared here
+  if (type === "dropdown") {
+    emptyQuestion = {
       question: "",
       answer: [""],
       incorrect: [[""]],
-      type: "dropDown",
-    });
-  } else {
-    questionData.value.push({
+      type: "dropdown",
+    };
+  } else if (type === "multiple_choice") {
+    emptyQuestion = {
       question: "",
       answer: "",
       incorrect: ["", "", ""],
-      type: type,
-    });
+      type: "multiple_choice",
+    };
+  } else if (type === "true/false") {
+    emptyQuestion = {
+      question: "",
+      answer: true, //how to use default boolean here
+      incorrect: false,
+      type: "true/false",
+    };
+  } else if (type === "numerical") {
+    emptyQuestion = {
+      question: "",
+      answer: 0, // use default num
+      type: "numerical",
+      incorrect: null,
+    };
   }
+  questionData.value.push(emptyQuestion); // says cannot find name emptyQuestion if declared inside if/else
 }
 function removeQuestion(index: number) {
   //only removes from questions array & quizTypes, emit is used in CreateQuestion component to remove whole component

@@ -13,7 +13,7 @@ export interface UserForm {
     password: string
 }
 
-export interface Question {
+interface BaseQuestion {  //dont export, DONT NAME AS JUST QUESTION
     question: string
     quiz?: number
 }
@@ -25,27 +25,28 @@ export interface Quiz {
     types: number[] | string[]
 }
 
-export type QuestionType = "multipleChoice" | "trueOrFalse" | "dropDown" | "numerical"
+export type QuestionType = "multiple_choice" | "true/false" | "dropdown" | "numerical"
 
-export interface MultipleChoiceQuestion extends Question {
-    type: "multipleChoice"
+export interface MultipleChoiceQuestion extends BaseQuestion {
+    type: "multiple_choice"
     answer: string
     incorrect: string[]
 }
 
-export interface TrueOrFalseQuestion extends Question {
-    type: "trueOrFalse"
+export interface TrueOrFalseQuestion extends BaseQuestion {
+    type: "true/false"
     answer: boolean
     incorrect: boolean
 }
 
-export interface NumericalQuestion extends Question {
+export interface NumericalQuestion extends BaseQuestion {
     type: "numerical"
     answer: number
+    incorrect: null
 }
 
-export interface DropdownQuestion extends Question {
-    type: "numerical"
+export interface DropDownQuestion extends BaseQuestion {
+    type: "dropdown"
     answer: string[]
     incorrect: string[][]
 }

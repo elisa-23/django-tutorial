@@ -1,7 +1,7 @@
 <template>
   <div class="card bg-slate-400">
     <h2>{{ count }}</h2>
-    <div v-if="type === 'multipleChoice'">
+    <div v-if="type === 'multiple_choice'">
       <input type="text" placeholder="Question" v-model="modelValue.question" />
       <input
         type="text"
@@ -18,12 +18,12 @@
       />
     </div>
 
-    <div v-if="type === 'trueOrFalse'">
+    <div v-if="type === 'true/false'">
       <input type="text" placeholder="Question" v-model="modelValue.question" />
       <input
         type="radio"
         id="True"
-        name="tf"
+        name="true/false"
         value="True"
         v-model="modelValue.answer"
       />
@@ -31,7 +31,7 @@
       <input
         type="radio"
         id="False"
-        name="tf"
+        name="true/false"
         value="False"
         v-model="modelValue.answer"
       />
@@ -47,7 +47,7 @@
       />
     </div>
 
-    <!-- <div v-if="type === 'dropDown'">
+    <!-- <div v-if="type === 'dropdown'">
       <input
         type="text"
         placeholder="Dropdown Title"
@@ -109,7 +109,13 @@ const props = defineProps<{
   count: number;
 }>();
 
-const modelValue = defineModel<Question>({ required: true });
+//const modelValue = defineModel<Question>({ required: true });
+const modelValue = defineModel<
+  | MultipleChoiceQuestion
+  | TrueOrFalseQuestion
+  | NumericalQuestion
+  | DropDownQuestion
+>({ required: true });
 
 const emit = defineEmits<{
   (e: "remove"): void;
