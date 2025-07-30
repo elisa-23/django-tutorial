@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  question: Question;
+  question: DropDown;
 }>();
 
 const choices = ref<string[][]>([]);

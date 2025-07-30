@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  question: Question;
+  question: TrueOrFalse;
 }>();
 
 const emit = defineEmits<{
