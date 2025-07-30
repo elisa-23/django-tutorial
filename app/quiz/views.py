@@ -13,7 +13,11 @@ class UserViewSet(viewsets.ModelViewSet):
 class QuizViewSet(viewsets.ModelViewSet):
 	queryset = Quiz.objects.all()
 	serializer_class = QuizSerializer
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['id', 'creator']
 
 class QuestionViewSet(viewsets.ModelViewSet):
 	queryset = Question.objects.all()
 	serializer_class = QuestionSerializer
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['quiz', 'id']
