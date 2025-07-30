@@ -14,6 +14,7 @@ export interface UserForm {
 }
 
 interface BaseQuestion {
+  //dont do this
   question: string;
   quizId: number;
 }
@@ -34,13 +35,11 @@ export interface MultipleChoiceQuestion extends BaseQuestion {
 export interface TrueOrFalseQuestion extends BaseQuestion {
   question_type: "true/false";
   answer: boolean;
-  incorrect: string[];
 }
 
 export interface NumericalQuestion extends BaseQuestion {
   question_type: "numerical";
   answer: number;
-  incorrect: string[];
 }
 
 export interface DropDownQuestion extends BaseQuestion {
