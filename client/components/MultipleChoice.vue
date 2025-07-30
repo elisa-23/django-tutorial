@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  question: MultipleChoice;
+  question: MultipleChoiceQuestion;
 }>();
 
 const emit = defineEmits<{

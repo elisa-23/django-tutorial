@@ -2,29 +2,25 @@
   <div>
     <h1>{{ quizzes[0]?.title }}</h1>
     <div class="flex flex-col space-y-4">
-      <div
-        v-if="
-          currentQuestionIndex < quizQuestions.length && currentQuestionDefined
-        "
-      >
+      <div v-if="currentQuestionIndex < quizQuestions.length">
         <MultipleChoice
-          v-if="currentQuestion?.question_type === 1"
-          :question="currentQuestion!"
+          v-if="currentQuestion?.question_type === 'multiple choice'"
+          :question="currentQuestion"
           @answerSelected="handleAnswer"
         />
         <TrueOrFalse
-          v-if="currentQuestion?.question_type === 2"
-          :question="currentQuestion!"
+          v-if="currentQuestion?.question_type === 'true/false'"
+          :question="currentQuestion"
           @answerSelected="handleAnswer"
         />
         <DropDown
-          v-if="currentQuestion?.question_type === 3"
-          :question="currentQuestion!"
+          v-if="currentQuestion?.question_type === 'dropdown'"
+          :question="currentQuestion"
           @answerSelected="handleAnswer"
         />
-        <Numeral
-          v-if="currentQuestion?.question_type === 4"
-          :question="currentQuestion!"
+        <Numerical
+          v-if="currentQuestion?.question_type === 'numerical'"
+          :question="currentQuestion"
           @answerSelected="handleAnswer"
         />
       </div>
@@ -67,10 +63,6 @@ const currentQuestion = computed(() => {
   return quizQuestions.value[currentQuestionIndex.value];
 });
 
-const currentQuestionDefined = computed(
-  () => currentQuestion.value !== undefined
-);
-
 function nextQuestion() {
   if (currentQuestionIndex.value < quizQuestions.value.length - 1) {
     currentQuestionIndex.value++;
@@ -82,7 +74,7 @@ function handleAnswer(choice: string | string[] | boolean | number) {
 
   const question = currentQuestion.value;
 
-  if (question.question_type === 3) {
+  if (question.question_type === "dropdown") {
     if (Array.isArray(question.answer) && Array.isArray(choice)) {
       const correct = choice.every(
         (c, index) =>
@@ -93,8 +85,6 @@ function handleAnswer(choice: string | string[] | boolean | number) {
       } else {
         console.log("Incorrect!");
       }
-    } else {
-      console.log("Invalid choice for dropdown question.");
     }
     nextQuestion();
     return;

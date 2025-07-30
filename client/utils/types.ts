@@ -13,9 +13,8 @@ export interface UserForm {
   username: string;
 }
 
-export interface Question {
+interface BaseQuestion {
   question: string;
-  question_type: number;
   quizId: number;
 }
 
@@ -26,22 +25,32 @@ export interface Quiz {
   questions: Question[];
 }
 
-export interface MultipleChoice extends Question {
+export interface MultipleChoiceQuestion extends BaseQuestion {
+  question_type: "multiple choice";
   answer: string;
   incorrect: string[];
 }
 
-export interface TrueOrFalse extends Question {
+export interface TrueOrFalseQuestion extends BaseQuestion {
+  question_type: "true/false";
   answer: boolean;
   incorrect: string[];
 }
 
-export interface Numeral extends Question {
+export interface NumericalQuestion extends BaseQuestion {
+  question_type: "numerical";
   answer: number;
   incorrect: string[];
 }
 
-export interface DropDown extends Question {
+export interface DropDownQuestion extends BaseQuestion {
+  question_type: "dropdown";
   answer: string[];
   incorrect: string[][];
 }
+
+export type Question =
+  | MultipleChoiceQuestion
+  | TrueOrFalseQuestion
+  | NumericalQuestion
+  | DropDownQuestion;

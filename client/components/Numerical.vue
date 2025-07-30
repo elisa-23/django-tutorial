@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  question: Numeral;
+  question: NumericalQuestion;
 }>();
 
 const userAnswer = ref(0);
