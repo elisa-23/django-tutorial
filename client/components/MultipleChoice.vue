@@ -5,7 +5,7 @@
       <ul class="space-y-3">
         <li
           v-for="(choice, index) in shuffle([
-            question.answer as string,
+            question.answer,
             ...question.incorrect,
           ])"
           :key="index"
@@ -21,15 +21,15 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  question: Question;
+  question: MultipleChoice;
 }>();
 
 const emit = defineEmits<{
-  answerSelected: [choice: string | string[]];
+  answerSelected: [choice: string];
   //(e: "answerSelected", choice: string  | string[]): void;
 }>();
 
-function selectAnswer(choice: string | string[]) {
+function selectAnswer(choice: string) {
   emit("answerSelected", choice);
 }
 </script>
