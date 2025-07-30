@@ -3,8 +3,8 @@
         <div class="w-[100%] h-[10%] text-center">
             <h3 v-if="signin" class="text-lg font-semibold">Welcome, {{username}}!</h3>
             <!-- create sign in button to redirect to signin page -->
-            <NuxtLink to="/SignIn">
-                <button v-if="!signin" class="bg-white rounded-md w-[100%] h-[50%] text-center hover:bg-[#E6E6FA] active:bg-[#CCCCFF] m-auto">Sign In</button>
+            <NuxtLink to="/SignIn" v-if="!signin" class="bg-white rounded-md w-[100%] h-[50%] text-center hover:bg-[#E6E6FA] active:bg-[#CCCCFF] m-auto">
+                Sign In
             </NuxtLink>
             <button v-if="signin" class="bg-white rounded-md w-[100%] h-[50%] text-center hover:bg-[#E6E6FA] active:bg-[#CCCCFF] m-auto" @click="userStore.signOut">
                 Sign Out

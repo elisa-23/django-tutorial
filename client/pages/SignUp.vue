@@ -36,8 +36,8 @@
             <button type="submit">Sign Up</button>
         </form>
         <br>
-        <NuxtLink to="/signin">
-            <p class="italic underline hover:text-sky-600">Have an account? Click here to sign in.</p>
+        <NuxtLink to="/signin" class="italic underline hover:text-sky-600">
+            Have an account? Click here to sign in.
         </NuxtLink>
     </div>
 </template>
@@ -48,16 +48,6 @@ const username = ref("");
 const password = ref("");
 const check = ref("");
 const role = ref(0);
-
-const userInfo = reactive<User>({
-    email: "",
-    id: 0,
-    role: 1, // Default role set to 'user'
-    // You can change this to 'supervisor' if needed
-    username: "",
-    accessToken: "",
-    refreshToken: "",
-});
 
 const emailExists = ref(false);
 const usernameExists = ref(false);
@@ -70,7 +60,7 @@ async function signup() {
         return;
     }
 
-    const existing = await fetchEndpoint<any[]>('/users/') || [];
+    const existing = await fetchEndpoint<[]>('/users/', 'GET', undefined, ) || [];
     console.log(email.value, username.value, existing);
     for (const user of existing) {
         if (user.email === email.value) {

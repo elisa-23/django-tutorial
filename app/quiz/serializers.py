@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser, Question, Quiz
+from .models import CustomUser, Question, Quiz, Answer
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,19 +16,27 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class QuestionSerializer(serializers.ModelSerializer):
+    answers = serializers.AnswerSerializer(many=True, read_only=True)
     class Meta:
         model = Question
-        fields = ['id', 'question', 'answer', 'incorrect', 'quiz', 'question_type']
-    def validate_question_type(self, value):
-        valid_choices = ['multiple choice', 'true/false', 'numerical', 'dropdown']
-        if value not in valid_choices:
-            raise serializers.ValidationError("Invalid choice for 'question_type'.")
-        return value
+        fields = ['id', 'question', 'answers', 'quiz', 'question_type']
+    
+    def get_answers(self, obj):
+        return [answer.answer for answer in obj.answers.all()]
+
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ['id', 'question', 'answer', 'correct']
 
 class QuizSerializer(serializers.ModelSerializer):
+    creator = serializers.SlugRelatedField(
+            slug_field='username',  # The field on the related model to use
+            queryset=CustomUser.objects.all() # The queryset for validation
+    )
     class Meta:
         model = Quiz
-        fields = ['id', 'title', 'types', 'creator']
+        fields = ['id', 'title', 'creator']
     
     def validate_types(self, value):
         valid_choices = ['multiple choice', 'true/false', 'numerical', 'dropdown']

@@ -1,14 +1,16 @@
-import django_filters
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import CustomUser, Question, Quiz
 from .serializers import UserSerializer, QuizSerializer, QuestionSerializer
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 	queryset = CustomUser.objects.all()
 	serializer_class = UserSerializer
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['id']
+	def get_queryset(self):
+        # Filter objects to only show those owned by the current user
+		return CustomUser.objects.filter(id=self.request.user.id)
 
 class QuizViewSet(viewsets.ModelViewSet):
 	queryset = Quiz.objects.all()

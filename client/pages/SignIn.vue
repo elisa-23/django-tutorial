@@ -8,8 +8,8 @@
             <button type="submit">Sign In</button>
         </form>
         <br>
-        <NuxtLink to="/signup">
-            <p class="italic underline hover:text-sky-600">Don't have an account? Click here to sign up.</p>
+        <NuxtLink to="/signup" class="italic underline hover:text-sky-600">
+            Don't have an account? Click here to sign up.
         </NuxtLink>
     </div>
 </template>
@@ -27,15 +27,6 @@ onBeforeMount(() => {
     password.value = '';
 })
 
-const userInfo = reactive<User>({
-    email: "",
-    id: 0,
-    role: "",
-    username: "",
-    accessToken: "",
-    refreshToken: "",
-});
-
 /**
  * Signs in a user using the provided email and password.
  * If the email and password are valid, the user info is stored in the userInfo reactive object.
@@ -45,7 +36,7 @@ const userInfo = reactive<User>({
 
 const userStore = useUserStore();
 async function signin() {
-    await userStore.signIn(email.value, password.value, userInfo);
+    await userStore.signIn(email.value, password.value);
     email.value = "";
     password.value = "";
 }

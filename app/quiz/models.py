@@ -20,18 +20,13 @@ class CustomUserManager(BaseUserManager):
 
 # Create your models here.
 class CustomUser(AbstractUser):
-
-    USER = 1
-    SUPERVISOR = 2
-    ROLE_CHOICES = ((USER, 'user'), (SUPERVISOR, 'supervisor'))
-    role = models.CharField(choices=ROLE_CHOICES, null=False, default=(USER, 'user'))
-
+    role = models.IntegerField(null=False, default=1)
     username = models.CharField(max_length=255, null=False, unique=True)
     email = models.EmailField(null=False, unique=True)            #parenthesis can't be empty
     #password = models.CharField(max_length=255, null=False)      #might not be needed since it was created in Abstract User
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', 'role']
 
     objects = CustomUserManager()
 
@@ -39,7 +34,6 @@ class CustomUser(AbstractUser):
     	return "{}".format(self.email)
 
 class Quiz(models.Model):
-    types = models.JSONField()
     title = models.CharField(max_length=255, null=False)
     creator = models.ForeignKey(CustomUser, null=False, on_delete=models.CASCADE)
 
@@ -48,11 +42,17 @@ class Quiz(models.Model):
 
 class Question(models.Model):
     question = models.CharField(max_length=255, null=False)
-    answer = models.JSONField(default=list)
-    incorrect = models.JSONField(default=list, blank=True, null=True)
+    answers = models.ManyToManyField('Answer', null=False, blank=True, related_name='answers')
     quiz = models.ForeignKey(Quiz, null=False, on_delete=models.CASCADE)
     question_type = models.CharField(max_length=255, null=False, default='multiple choice')
 
     def __str__(self):
         return str(self.id)
     
+class Answer(models.Model):
+    question = models.ForeignKey(Question, null=False, on_delete=models.CASCADE)
+    answer = models.CharField(max_length=255, null=False)
+    correct = models.BooleanField(null=False)
+
+    def __str__(self):
+        return str(self.id)
